@@ -4,15 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detail Lokasi Tanah Longsor</title>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.css" />
-  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="gradient-header">
     <h1>Detail Lokasi Tanah Longsor</h1>
-    <p>Informasi lengkap dari tiap titik lokasi pada peta</p>
   </header>
 
   <nav class="navbar">
@@ -21,47 +17,48 @@
   </nav>
 
   <main>
-    <section class="detail-container" id="detail-container">
-      <!-- Detail lokasi akan dimasukkan oleh JavaScript -->
-    </section>
+    <div class="detail-container">
+      <div class="detail-image">
+        <img id="lokasi-gambar" src="" alt="Foto lokasi" />
+      </div>
+      <div class="detail-info">
+        <h2 id="lokasi-nama"></h2>
+        <p><strong>Alamat:</strong> <span id="lokasi-alamat"></span></p>
+        <p><strong>Risiko:</strong> <span id="lokasi-risiko"></span></p>
+        <p><strong>Penyebab:</strong> <span id="lokasi-penyebab"></span></p>
+        <p><strong>Dampak:</strong> <span id="lokasi-dampak"></span></p>
+        <p><strong>Jenis Tanah:</strong> <span id="lokasi-jenis"></span></p>
+        <p><strong>Catatan:</strong> <span id="lokasi-catatan"></span></p>
+        <p><a id="lokasi-link" href="" target="_blank">Lihat di Google Maps</a></p>
+      </div>
+    </div>
   </main>
 
   <footer class="gradient-footer">
-    <p>&copy; 2025 EatMoreBerries | Dibuat dengan <span style="color: red;">&hearts;</span></p>
+    <p>&copy; Kelompok III | Dibuat dengan <span style="color: red;">&hearts;</span></p>
   </footer>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const lokasiId = new URLSearchParams(window.location.search).get('id');
+    const params = new URLSearchParams(window.location.search);
+    const id = parseInt(params.get("id"));
 
-      fetch('data/data.json')
-        .then(res => res.json())
-        .then(data => {
-          const lokasi = data.find(l => l.id === parseInt(lokasiId));
-          if (!lokasi) {
-            document.getElementById("detail-container").innerHTML = '<p>Data tidak ditemukan.</p>';
-            return;
-          }
+    fetch("data.json")
+      .then(response => response.json())
+      .then(data => {
+        const lokasi = data.find(item => item.id === id);
+        if (!lokasi) return;
 
-          const detailHTML = `
-            <div class="lokasi-detail">
-              <img src="${lokasi.gambar}" alt="Foto lokasi ${lokasi.nama}" class="lokasi-img" />
-              <div class="lokasi-info">
-                <h2>${lokasi.nama}</h2>
-                <p><strong>Alamat:</strong> ${lokasi.alamat}</p>
-                <p><strong>Risiko:</strong> ${lokasi.risiko}</p>
-                <p><strong>Penyebab:</strong> ${lokasi.penyebab}</p>
-                <p><strong>Dampak:</strong> ${lokasi.dampak}</p>
-                <p><strong>Jenis Tanah:</strong> ${lokasi.jenis_tanah}</p>
-                <p><strong>Catatan:</strong> ${lokasi.catatan}</p>
-                <p><a href="${lokasi.googleMapsLink}" target="_blank">Lihat di Google Maps</a></p>
-              </div>
-            </div>
-          `;
-
-          document.getElementById("detail-container").innerHTML = detailHTML;
-        });
-    });
+        document.getElementById("lokasi-nama").textContent = lokasi.nama;
+        document.getElementById("lokasi-alamat").textContent = lokasi.alamat;
+        document.getElementById("lokasi-risiko").textContent = lokasi.risiko;
+        document.getElementById("lokasi-penyebab").textContent = lokasi.penyebab;
+        document.getElementById("lokasi-dampak").textContent = lokasi.dampak;
+        document.getElementById("lokasi-jenis").textContent = lokasi.jenis_tanah;
+        document.getElementById("lokasi-catatan").textContent = lokasi.catatan;
+        document.getElementById("lokasi-link").href = lokasi.googleMapsLink;
+        document.getElementById("lokasi-gambar").src = lokasi.gambar;
+        document.getElementById("lokasi-gambar").alt = "Foto lokasi " + lokasi.nama;
+      });
   </script>
 </body>
 </html>
