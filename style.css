@@ -45,3 +45,34 @@ footer {
   font-size: 0.9rem;
   color: #2f3e46;
 }
+
+.detail-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 3rem 1rem;
+}
+
+.card {
+  background-color: #ffffffdd;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+  max-width: 600px;
+  width: 100%;
+  line-height: 1.6;
+}
+
+.card h2 {
+  margin-bottom: 1rem;
+  color: #2f3e46;
+}
+
+.card a {
+  color: #2a5d9f;
+  text-decoration: none;
+}
+
+.card a:hover {
+  text-decoration: underline;
+}
