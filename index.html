@@ -1,33 +1,29 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pemetaan Risiko Tanah Longsor</title>
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
-  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pemetaan Longsor</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
 </head>
 <body>
-    <header>
-        <h1>Pemetaan Risiko Tanah Longsor</h1>
-    </header>
-    <nav>
-        <a href="index.html">Beranda</a>
-        <a href="about.html">Tentang</a>
-    </nav>
-    <div class="container">
-        <div id="map"></div>
-    </div>
-    <footer>
-        <p>&copy; 2025 Pemetaan Risiko Tanah Longsor</p>
-    </footer>
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="js/map.js"></script>
-    <script src="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.js"></script>
-    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <header>
+    <h1>Pemetaan Longsor Kota Bogor</h1>
+    <p>Informasi lokasi dan tingkat risiko</p>
+  </header>
 
+  <main>
+    <section class="map-section">
+      <div id="map" class="map-container"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 EatMoreBerries | Dibuat dengan ❤️</p>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
