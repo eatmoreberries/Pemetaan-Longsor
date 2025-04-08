@@ -3,62 +3,117 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Detail Lokasi Tanah Longsor</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Pemetaan Longsor Kota Bogor</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --cream: #F1EFEC;
+      --beige: #D4C9BE;
+      --navy: #123458;
+      --black: #030303;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Rubik', sans-serif;
+      background: var(--cream);
+      color: var(--black);
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--navy);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+
+    nav {
+      background-color: var(--beige);
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      padding: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+
+    nav a {
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 10px 18px;
+      border-radius: 12px;
+      transition: background 0.3s ease;
+    }
+
+    nav a:hover {
+      background: var(--navy);
+      color: var(--cream);
+    }
+
+    .container {
+      flex: 1;
+      width: 90%;
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    }
+
+    #map {
+      width: 100%;
+      height: 500px;
+      border-radius: 15px;
+    }
+
+    footer {
+      background: var(--navy);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      border-radius: 30px 30px 0 0;
+    }
+  </style>
 </head>
 <body>
-  <header class="gradient-header">
-    <h1>Detail Lokasi Tanah Longsor</h1>
+  <header>
+    <h1>Pemetaan Longsor Kota Bogor</h1>
+    <p>Informasi lokasi dan tingkat risiko</p>
   </header>
 
-  <nav class="navbar">
+  <nav>
     <a href="index.html">Beranda</a>
     <a href="about.html">Tentang</a>
   </nav>
 
-  <main>
-    <div class="detail-container">
-      <div class="detail-image">
-        <img id="lokasi-gambar" src="" alt="Foto lokasi" />
-      </div>
-      <div class="detail-info">
-        <h2 id="lokasi-nama"></h2>
-        <p><strong>Alamat:</strong> <span id="lokasi-alamat"></span></p>
-        <p><strong>Risiko:</strong> <span id="lokasi-risiko"></span></p>
-        <p><strong>Penyebab:</strong> <span id="lokasi-penyebab"></span></p>
-        <p><strong>Dampak:</strong> <span id="lokasi-dampak"></span></p>
-        <p><strong>Jenis Tanah:</strong> <span id="lokasi-jenis"></span></p>
-        <p><strong>Catatan:</strong> <span id="lokasi-catatan"></span></p>
-        <p><a id="lokasi-link" href="" target="_blank">Lihat di Google Maps</a></p>
-      </div>
-    </div>
-  </main>
+  <div class="container">
+    <div id="map"></div>
+  </div>
 
-  <footer class="gradient-footer">
-    <p>&copy; Kelompok III | Dibuat dengan <span style="color: red;">&hearts;</span></p>
+  <footer>
+    <p>&copy; 2025 EatMoreBerries | Dibuat dengan <span style="color: red;">&hearts;</span></p>
   </footer>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
-    const id = parseInt(params.get("id"));
-
-    fetch("data.json")
-      .then(response => response.json())
-      .then(data => {
-        const lokasi = data.find(item => item.id === id);
-        if (!lokasi) return;
-
-        document.getElementById("lokasi-nama").textContent = lokasi.nama;
-        document.getElementById("lokasi-alamat").textContent = lokasi.alamat;
-        document.getElementById("lokasi-risiko").textContent = lokasi.risiko;
-        document.getElementById("lokasi-penyebab").textContent = lokasi.penyebab;
-        document.getElementById("lokasi-dampak").textContent = lokasi.dampak;
-        document.getElementById("lokasi-jenis").textContent = lokasi.jenis_tanah;
-        document.getElementById("lokasi-catatan").textContent = lokasi.catatan;
-        document.getElementById("lokasi-link").href = lokasi.googleMapsLink;
-        document.getElementById("lokasi-gambar").src = lokasi.gambar;
-        document.getElementById("lokasi-gambar").alt = "Foto lokasi " + lokasi.nama;
-      });
-  </script>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <script src="js/map.js"></script>
 </body>
 </html>
