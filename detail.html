@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Detail Lokasi Longsor</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
 </head>
 <body>
   <header>
@@ -14,17 +14,23 @@
 
   <main class="detail-container">
     <div class="card">
-      <h2>Jalan Raya Tajur, Bogor Selatan</h2>
-      <p><strong>Risiko:</strong> Tinggi</p>
-      <p><strong>Penyebab:</strong> Curah hujan tinggi + kemiringan lahan</p>
-      <p><strong>Dampak:</strong> Akses jalan tertutup total selama 2 hari</p>
-      <p><strong>Jenis Tanah:</strong> Lempung</p>
-      <p><strong>Google Maps:</strong> <a href="https://maps.app.goo.gl/xxxx" target="_blank">Lihat Lokasi</a></p>
+      <h2 id="nama-lokasi">Loading...</h2>
+      <p><strong>Alamat:</strong> <span id="alamat">-</span></p>
+      <p><strong>Longitude:</strong> <span id="longitude">-</span></p>
+      <p><strong>Latitude:</strong> <span id="latitude">-</span></p>
+      <p><strong>Risiko:</strong> <span id="risiko">-</span></p>
+      <p><strong>Penyebab:</strong> <span id="penyebab">-</span></p>
+      <p><strong>Dampak:</strong> <span id="dampak">-</span></p>
+      <p><strong>Jenis Tanah:</strong> <span id="jenis-tanah">-</span></p>
+      <p><strong>Catatan:</strong> <span id="catatan">-</span></p>
+      <p><a id="googleMapsLink" href="#" target="_blank">Lihat di Google Maps</a></p>
     </div>
   </main>
 
   <footer>
     <p>&copy; 2025 EatMoreBerries | Pemetaan Longsor</p>
   </footer>
+
+  <script src="script-detail.js"></script>
 </body>
 </html>
