@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Pemetaan Longsor Kota Bogor</title>
-  <link rel="stylesheet" href="css/style.css" />
+  <title>Detail Lokasi Tanah Longsor</title>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.css" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="gradient-header">
-    <h1>Pemetaan Longsor Kota Bogor</h1>
-    <p>Informasi lokasi dan tingkat risiko</p>
+    <h1>Detail Lokasi Tanah Longsor</h1>
+    <p>Informasi lengkap dari tiap titik lokasi pada peta</p>
   </header>
 
   <nav class="navbar">
@@ -20,135 +20,48 @@
     <a href="about.html">Tentang</a>
   </nav>
 
-  <div class="container map-container">
-    <div id="map"></div>
-  </div>
+  <main>
+    <section class="detail-container" id="detail-container">
+      <!-- Detail lokasi akan dimasukkan oleh JavaScript -->
+    </section>
+  </main>
 
   <footer class="gradient-footer">
     <p>&copy; 2025 EatMoreBerries | Dibuat dengan <span style="color: red;">&hearts;</span></p>
   </footer>
 
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-  <script src="js/map.js"></script>
-  <script src="https://unpkg.com/leaflet.fullscreen@1.6.0/Control.FullScreen.js"></script>
-  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const lokasiId = new URLSearchParams(window.location.search).get('id');
+
+      fetch('data/data.json')
+        .then(res => res.json())
+        .then(data => {
+          const lokasi = data.find(l => l.id === parseInt(lokasiId));
+          if (!lokasi) {
+            document.getElementById("detail-container").innerHTML = '<p>Data tidak ditemukan.</p>';
+            return;
+          }
+
+          const detailHTML = `
+            <div class="lokasi-detail">
+              <img src="${lokasi.gambar}" alt="Foto lokasi ${lokasi.nama}" class="lokasi-img" />
+              <div class="lokasi-info">
+                <h2>${lokasi.nama}</h2>
+                <p><strong>Alamat:</strong> ${lokasi.alamat}</p>
+                <p><strong>Risiko:</strong> ${lokasi.risiko}</p>
+                <p><strong>Penyebab:</strong> ${lokasi.penyebab}</p>
+                <p><strong>Dampak:</strong> ${lokasi.dampak}</p>
+                <p><strong>Jenis Tanah:</strong> ${lokasi.jenis_tanah}</p>
+                <p><strong>Catatan:</strong> ${lokasi.catatan}</p>
+                <p><a href="${lokasi.googleMapsLink}" target="_blank">Lihat di Google Maps</a></p>
+              </div>
+            </div>
+          `;
+
+          document.getElementById("detail-container").innerHTML = detailHTML;
+        });
+    });
+  </script>
 </body>
 </html>
-
-/* === style.css (letakkan di css/style.css) === */
-
-@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300;500;700&display=swap');
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  height: 100%;
-}
-
-body {
-  font-family: 'Rubik', sans-serif;
-  background: #fdf4ff;
-  color: #2e1065;
-  line-height: 1.6;
-  display: flex;
-  flex-direction: column;
-}
-
-main {
-  flex: 1;
-  width: 90%;
-  max-width: 1200px;
-  margin: auto;
-  padding: 20px 0;
-}
-
-/* HEADER */
-header {
-  background: linear-gradient(90deg, #9333ea, #f472b6);
-  color: white;
-  padding: 40px 20px;
-  text-align: center;
-  border-radius: 0 0 30px 30px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-}
-
-/* NAVBAR */
-nav {
-  background-color: #a855f7;
-  text-align: center;
-  padding: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-}
-nav a {
-  color: white;
-  text-decoration: none;
-  padding: 10px 20px;
-  margin: 0 10px;
-  font-weight: 500;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-}
-nav a:hover {
-  background-color: #f472b6;
-  color: #fff;
-}
-
-/* MAP */
-#map {
-  width: 100%;
-  height: 500px;
-  margin: 30px auto;
-  border-radius: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-/* FOOTER */
-footer {
-  background: #9333ea;
-  color: white;
-  text-align: center;
-  padding: 20px;
-  border-radius: 30px 30px 0 0;
-}
-
-/* ANGGOTA - for about.html */
-.anggota-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 25px;
-  padding: 40px 20px;
-}
-
-.anggota {
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 20px;
-  width: 220px;
-  padding: 20px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-  text-align: center;
-  transition: transform 0.3s ease;
-}
-.anggota:hover {
-  transform: scale(1.05);
-}
-.anggota img {
-  width: 100%;
-  border-radius: 16px;
-  margin-bottom: 10px;
-}
-.anggota p {
-  font-size: 14px;
-  color: #4c1d95;
-}
-
-/* SEARCH ADJUST */
-.leaflet-control-geocoder {
-  margin-top: 50px !important;
-}
