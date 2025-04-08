@@ -40,7 +40,7 @@
         fetch('data/lokasi.json')
             .then(response => response.json())
             .then(data => {
-                const lokasi = data.find(l => l.id == id);
+                const lokasi = data.find(l => l.id === parseInt(id));
                 if (lokasi) {
                     document.getElementById('nama-lokasi').innerText = lokasi.nama;
                     document.getElementById('gambar-lokasi').src = lokasi.gambar;
